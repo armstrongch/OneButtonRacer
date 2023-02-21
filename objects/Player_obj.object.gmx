@@ -3,7 +3,7 @@
   <spriteName>Racer_spr</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>0</depth>
+  <depth>-5</depth>
   <persistent>0</persistent>
   <parentName>Racer_obj</parentName>
   <maskName>&lt;undefined&gt;</maskName>
@@ -29,6 +29,19 @@
 cpu_type = "player";
 
 var bronze = instance_create(x,y,Racer_obj);
+with(bronze) { cpu_type = "bronze"; }
+
+var silver = instance_create(x,y,Racer_obj);
+with (silver) { cpu_type = "silver"; }
+
+var gold = instance_create(x,y,Racer_obj);
+with (gold) { cpu_type = "gold"; }
+
+var platinum = instance_create(x,y,Racer_obj); 
+with (platinum) { cpu_type = "platinum"; }
+
+//test
+image_blend = c_yellow;
 </string>
           </argument>
         </arguments>
@@ -55,7 +68,7 @@ var bronze = instance_create(x,y,Racer_obj);
 
 if (keyboard_check(ord("R")))
 {
-    room_restart();
+    game_restart();
 }
 </string>
           </argument>

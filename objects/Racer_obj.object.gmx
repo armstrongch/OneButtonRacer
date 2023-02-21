@@ -44,6 +44,9 @@ space_pressed = false;
 space_released = false;
 
 cpu_type = "bronze";
+cpu_hit_checkpoint_flag = false;
+
+debug_text = "";
 </string>
           </argument>
         </arguments>
@@ -97,6 +100,16 @@ if (image_angle != direction) { image_angle = direction; }
             <kind>1</kind>
             <string>get_input();
 
+var wall_collision = place_meeting(x+hspeed, y+vspeed, Wall_obj);
+
+if (wall_collision)
+{
+    charge = 0;
+    braking = false;
+    speed = 0;
+    change_direction();
+}
+
 if (!braking)
 {
     if (space_pressed)
@@ -107,14 +120,6 @@ if (!braking)
     {
         speed += accel_speed;
         if (speed &gt; max_speed) { speed = max_speed; }
-        
-        if (place_meeting(x+hspeed, y+vspeed, Wall_obj))
-        {
-            charge = 0;
-            braking = false;
-            speed = 0;
-            change_direction();
-        }
     }
 }
 
@@ -168,6 +173,7 @@ if (braking)
         next_checkpoint_index = 0;
         lap_num += 1;
     }
+    cpu_hit_checkpoint_flag = true;
 }
 </string>
           </argument>
@@ -191,8 +197,17 @@ if (braking)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>//var dir_to_other = point_direction(x, y, other.x+8, other.y+8);
-//while(place_meeting(
+            <string>var dir_from_other = point_direction(other.x + 8, other.y + 8, x, y);
+var dir_from_other_rad = dir_from_other/180*pi;
+
+var x_incr = cos(dir_from_other_rad);
+var y_incr = -1 * sin(dir_from_other_rad);
+
+while(place_meeting(x, y, other))
+{
+    x += x_incr;
+    y += y_incr;
+}
 </string>
           </argument>
         </arguments>
@@ -215,8 +230,7 @@ if (braking)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_self();
-
+            <string>/*
 if (next_checkpoint != noone)
 {
     draw_set_color(c_black);
@@ -230,6 +244,22 @@ var back_y = y + sin(direction/180*pi)*8;
 var charge_rad = charge*3;
 draw_circle(back_x, back_y, charge_rad, false);
 
+draw_set_color(c_red);
+draw_set_alpha(1);
+if (debug_text != "")
+{
+    
+    draw_text(20, 20, debug_text);
+}
+*/
+draw_set_color(c_red);
+if (cpu_type != "player")
+{
+    draw_text(x, y, cpu_type);
+    image_alpha = 0.5;
+} 
+draw_self();
+image_alpha = 1;
 </string>
           </argument>
         </arguments>

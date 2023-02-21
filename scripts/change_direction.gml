@@ -25,3 +25,4 @@ else
 }
 speed = charge;
 charge = 0;
+cpu_hit_checkpoint_flag = false;
