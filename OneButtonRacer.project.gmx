@@ -17,6 +17,7 @@
     <script>scripts\create_checkpoint.gml</script>
     <script>scripts\get_next_wall_in_direction.gml</script>
     <script>scripts\change_direction.gml</script>
+    <script>scripts\get_input.gml</script>
   </scripts>
   <objects name="objects">
     <object>objects\Wall_obj</object>

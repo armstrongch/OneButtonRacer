@@ -39,6 +39,11 @@ if (instance_number(CheckpointManager_obj) == 0)
 {
     instance_create(0, 0, CheckpointManager_obj);
 }
+
+space_pressed = false;
+space_released = false;
+
+cpu_type = "bronze";
 </string>
           </argument>
         </arguments>
@@ -61,15 +66,7 @@ if (instance_number(CheckpointManager_obj) == 0)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (place_meeting(x+hspeed, y+vspeed, Wall_obj))
-{
-    charge = 0;
-    braking = false;
-    speed = 0;
-    change_direction();
-}
-
-if (next_checkpoint == noone)
+            <string>if (next_checkpoint == noone)
 {
     next_checkpoint = ds_list_find_value(
         CheckpointManager_obj.checkpoints, next_checkpoint_index);
@@ -98,8 +95,7 @@ if (image_angle != direction) { image_angle = direction; }
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>var space_pressed = keyboard_check_pressed(vk_space);
-var space_released = keyboard_check_released(vk_space);
+            <string>get_input();
 
 if (!braking)
 {
@@ -111,6 +107,14 @@ if (!braking)
     {
         speed += accel_speed;
         if (speed &gt; max_speed) { speed = max_speed; }
+        
+        if (place_meeting(x+hspeed, y+vspeed, Wall_obj))
+        {
+            charge = 0;
+            braking = false;
+            speed = 0;
+            change_direction();
+        }
     }
 }
 
@@ -165,6 +169,30 @@ if (braking)
         lap_num += 1;
     }
 }
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="4" ename="Wall_obj">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>//var dir_to_other = point_direction(x, y, other.x+8, other.y+8);
+//while(place_meeting(
 </string>
           </argument>
         </arguments>
