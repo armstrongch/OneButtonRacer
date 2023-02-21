@@ -25,7 +25,8 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>create_checkpoints(x, y, direction);
+            <string>var racer = instance_find(Racer_obj, 0);
+create_checkpoints(racer.x, racer.y, direction);
 </string>
           </argument>
         </arguments>

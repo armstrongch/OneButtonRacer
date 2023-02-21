@@ -7,7 +7,207 @@
   <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
-  <events/>
+  <events>
+    <event eventtype="0" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>accel_speed = 1/10;
+max_speed = 16;
+
+braking = false;
+charge = 0;
+
+next_checkpoint_index = 0;
+lap_num = 1;
+next_checkpoint = noone;
+
+if (instance_number(CheckpointManager_obj) == 0)
+{
+    instance_create(0, 0, CheckpointManager_obj);
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="3" enumb="1">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>if (place_meeting(x+hspeed, y+vspeed, Wall_obj))
+{
+    charge = 0;
+    braking = false;
+    speed = 0;
+    change_direction();
+}
+
+if (next_checkpoint == noone)
+{
+    next_checkpoint = ds_list_find_value(
+        CheckpointManager_obj.checkpoints, next_checkpoint_index);
+}
+
+if (image_angle != direction) { image_angle = direction; }
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="3" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>var space_pressed = keyboard_check_pressed(vk_space);
+var space_released = keyboard_check_released(vk_space);
+
+if (!braking)
+{
+    if (space_pressed)
+    {
+        braking = true;
+    }
+    else
+    {
+        speed += accel_speed;
+        if (speed &gt; max_speed) { speed = max_speed; }
+    }
+}
+
+if (braking)
+{
+    if (!space_released)
+    {
+        speed -= accel_speed;
+        charge += accel_speed;
+        if (speed &lt;= 0)
+        {
+            speed = 0;
+            space_released = true;
+        }
+    }
+    
+    if (space_released)
+    {
+        braking = false;
+        change_direction();
+    }
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="4" ename="Checkpoint_obj">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>if (other.id == next_checkpoint.id)
+{
+    next_checkpoint = noone;
+    next_checkpoint_index += 1;
+    if (next_checkpoint_index &gt; ds_list_size(CheckpointManager_obj.checkpoints) - 1)
+    {
+        next_checkpoint_index = 0;
+        lap_num += 1;
+    }
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>draw_self();
+
+if (next_checkpoint != noone)
+{
+    draw_set_color(c_black);
+    draw_line(x, y, next_checkpoint.x, next_checkpoint.y);
+}
+
+draw_set_color(c_green);
+draw_set_alpha(0.5);
+var back_x = x + cos(direction/180*pi)*8;
+var back_y = y + sin(direction/180*pi)*8;
+var charge_rad = charge*3;
+draw_circle(back_x, back_y, charge_rad, false);
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+  </events>
   <PhysicsObject>0</PhysicsObject>
   <PhysicsObjectSensor>0</PhysicsObjectSensor>
   <PhysicsObjectShape>0</PhysicsObjectShape>
