@@ -6,7 +6,7 @@ checkpoints = ds_list_create();
 
 global.overlapping = false;
 var counter = 0;
-while (!global.overlapping && counter < 2)
+while (!global.overlapping /*&& counter < 2*/)
 {
     show_debug_message("Create Checkpoint x_pos, y_pos, dir: " 
         + string(x_pos) + ", " + string(y_pos) + ", " + string(dir));

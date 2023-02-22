@@ -2,7 +2,7 @@
 <object>
   <spriteName>Racer_spr</spriteName>
   <solid>0</solid>
-  <visible>-1</visible>
+  <visible>0</visible>
   <depth>0</depth>
   <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
@@ -32,13 +32,8 @@ braking = false;
 charge = 0;
 
 next_checkpoint_index = 0;
-lap_num = 1;
+lap_num = 0;
 next_checkpoint = noone;
-
-if (instance_number(CheckpointManager_obj) == 0)
-{
-    instance_create(0, 0, CheckpointManager_obj);
-}
 
 space_pressed = false;
 space_released = false;
@@ -74,8 +69,6 @@ debug_text = "";
     next_checkpoint = ds_list_find_value(
         CheckpointManager_obj.checkpoints, next_checkpoint_index);
 }
-
-if (image_angle != direction) { image_angle = direction; }
 </string>
           </argument>
         </arguments>
@@ -115,6 +108,25 @@ if (!braking)
     if (space_pressed)
     {
         braking = true;
+        
+        var test_cp = next_checkpoint;
+        var test_index = next_checkpoint_index;
+        var next_wall = get_next_wall_in_direction(x, y, direction);
+        //Step back
+        var next_wall_x = next_wall.x + 8 + cos(direction/180*pi + pi)*16;
+        var next_wall_y = next_wall.y + 8 - sin(direction/180*pi + pi)*16
+        
+        if (collision_line(x, y, next_wall_x, next_wall_y, test_cp, true, true))
+        {
+            test_index += 1;
+            if (test_index &gt; ds_list_size(CheckpointManager_obj.checkpoints)-1)
+            {
+                test_index = 0;
+            }
+            test_cp = ds_list_find_value(CheckpointManager_obj.checkpoints, test_index);
+        }
+        
+        image_angle = predict_next_dir(next_wall_x, next_wall_y, direction, test_cp);
     }
     else
     {
@@ -142,6 +154,11 @@ if (braking)
         change_direction();
     }
 }
+
+if (is_ghost_active(cpu_type))
+{
+    visible = true;
+}
 </string>
           </argument>
         </arguments>
@@ -166,12 +183,16 @@ if (braking)
             <kind>1</kind>
             <string>if (other.id == next_checkpoint.id)
 {
+    if (next_checkpoint_index == 0)
+    {
+        lap_num += 1;
+    }
+    
     next_checkpoint = noone;
     next_checkpoint_index += 1;
     if (next_checkpoint_index &gt; ds_list_size(CheckpointManager_obj.checkpoints) - 1)
     {
         next_checkpoint_index = 0;
-        lap_num += 1;
     }
     cpu_hit_checkpoint_flag = true;
 }
@@ -230,34 +251,19 @@ while(place_meeting(x, y, other))
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (next_checkpoint != noone)
+            <string>if (cpu_type != "player")
 {
-    draw_set_color(c_black);
-    draw_line(x, y, next_checkpoint.x, next_checkpoint.y);
-}
-
-draw_set_color(c_green);
-draw_set_alpha(0.5);
-var back_x = x + cos(direction/180*pi)*8;
-var back_y = y + sin(direction/180*pi)*8;
-var charge_rad = charge*3;
-draw_circle(back_x, back_y, charge_rad, false);
-
-draw_set_color(c_red);
-draw_set_alpha(1);
-if (debug_text != "")
-{
-    
-    draw_text(20, 20, debug_text);
-}
-
-
-
-if (cpu_type != "player")
-{
-    draw_set_color(c_red);
-    draw_text(x, y, cpu_type);
-    
+    var distance_to_player = point_distance(x, y, Player_obj.x, Player_obj.y);
+    var opacity = 0;
+    if (distance_to_player &gt;= 32)
+    {
+        opacity = 0.5;   
+    }
+    else if (distance_to_player &gt; 16)
+    {
+        opacity = (distance_to_player-16) / 32;
+    }
+    image_alpha = opacity;
 } 
 draw_self();
 </string>

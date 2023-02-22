@@ -3,7 +3,7 @@
   <spriteName>Racer_spr</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>-5</depth>
+  <depth>-100</depth>
   <persistent>0</persistent>
   <parentName>Racer_obj</parentName>
   <maskName>&lt;undefined&gt;</maskName>
@@ -25,9 +25,25 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>event_inherited();
+            <string>if (instance_number(CheckpointManager_obj) == 0)
+{
+    instance_create(0, 0, CheckpointManager_obj);
+}
+
+if (instance_number(GhostManager_obj) == 0)
+{
+    instance_create(0, 0, GhostManager_obj);
+}
+
+if (instance_number(PauseManager_obj) == 0)
+{
+    instance_create(0, 0, PauseManager_obj);
+}
+
+event_inherited();
+
 cpu_type = "player";
-/*
+
 var bronze = instance_create(x,y,Racer_obj);
 with(bronze) { cpu_type = "bronze"; }
 
@@ -40,9 +56,9 @@ with (gold) { cpu_type = "gold"; }
 var platinum = instance_create(x,y,Racer_obj); 
 with (platinum) { cpu_type = "platinum"; }
 
-//test
-image_blend = c_green;
-*/
+current_track = instance_create(x, y, Tracks_obj);
+
+pause_game();
 </string>
           </argument>
         </arguments>
@@ -67,6 +83,12 @@ image_blend = c_green;
             <kind>1</kind>
             <string>event_inherited();
 
+if (current_track.visible)
+{
+    current_track = instance_create(x, y, Tracks_obj);
+}
+
+//Test
 if (keyboard_check(ord("R")))
 {
     game_restart();

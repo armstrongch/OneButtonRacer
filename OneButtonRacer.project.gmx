@@ -9,6 +9,7 @@
     <sprite>sprites\Wall_spr</sprite>
     <sprite>sprites\Checkpoint_spr</sprite>
     <sprite>sprites\Racer_spr</sprite>
+    <sprite>sprites\Tracks_spr</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
@@ -19,6 +20,10 @@
     <script>scripts\change_direction.gml</script>
     <script>scripts\get_input.gml</script>
     <script>scripts\brake_dist.gml</script>
+    <script>scripts\predict_next_dir.gml</script>
+    <script>scripts\is_ghost_active.gml</script>
+    <script>scripts\pause_game.gml</script>
+    <script>scripts\unpause_game.gml</script>
   </scripts>
   <objects name="objects">
     <object>objects\Wall_obj</object>
@@ -26,9 +31,13 @@
     <object>objects\Player_obj</object>
     <object>objects\CheckpointManager_obj</object>
     <object>objects\Checkpoint_obj</object>
+    <object>objects\Tracks_obj</object>
+    <object>objects\GhostManager_obj</object>
+    <object>objects\PauseManager_obj</object>
+    <object>objects\ColorManager_obj</object>
   </objects>
   <rooms name="rooms">
-    <room>rooms\Race_rm</room>
+    <room>rooms\Loop</room>
   </rooms>
   <help>
     <rtf>help.rtf</rtf>
