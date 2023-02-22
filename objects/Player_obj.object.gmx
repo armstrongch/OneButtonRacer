@@ -27,7 +27,7 @@
             <kind>1</kind>
             <string>event_inherited();
 cpu_type = "player";
-
+/*
 var bronze = instance_create(x,y,Racer_obj);
 with(bronze) { cpu_type = "bronze"; }
 
@@ -41,7 +41,8 @@ var platinum = instance_create(x,y,Racer_obj);
 with (platinum) { cpu_type = "platinum"; }
 
 //test
-image_blend = c_yellow;
+image_blend = c_green;
+*/
 </string>
           </argument>
         </arguments>

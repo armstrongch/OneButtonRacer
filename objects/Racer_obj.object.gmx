@@ -230,8 +230,7 @@ while(place_meeting(x, y, other))
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/*
-if (next_checkpoint != noone)
+            <string>if (next_checkpoint != noone)
 {
     draw_set_color(c_black);
     draw_line(x, y, next_checkpoint.x, next_checkpoint.y);
@@ -251,15 +250,16 @@ if (debug_text != "")
     
     draw_text(20, 20, debug_text);
 }
-*/
-draw_set_color(c_red);
+
+
+
 if (cpu_type != "player")
 {
+    draw_set_color(c_red);
     draw_text(x, y, cpu_type);
-    image_alpha = 0.5;
+    
 } 
 draw_self();
-image_alpha = 1;
 </string>
           </argument>
         </arguments>

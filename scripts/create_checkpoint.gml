@@ -38,10 +38,10 @@ while(!collision_line(x1, y1, x2, y2, Wall_obj, true, true))
     //show_debug_message("x1, y1, x2, y2: " + string(x1) + ", " + string(y1) + ", " + string(x2) + ", " + string(y2));
 }
 
-var left_anchor_dist_to_start = point_distance(x_pos, y_pos, x1, y1);
-var right_anchor_dist_to_start = point_distance(x_pos, y_pos, x2, y2);
+//Step forwards again so (x1, y1) and (x2, y2) are not intersecting a wall
+//Draw a line back to the previous checkpoint to see whether this is a right turn
+var right_turn = collision_line(x2 - x_incr, y2 - y_incr, x_pos, y_pos, Wall_obj, true, true);
 
-var right_turn = left_anchor_dist_to_start < right_anchor_dist_to_start;
 var anchor_finder_x = -1;
 var anchor_finder_y = -1;
 
