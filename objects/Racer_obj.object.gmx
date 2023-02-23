@@ -3,7 +3,7 @@
   <spriteName>Racer_spr</spriteName>
   <solid>0</solid>
   <visible>0</visible>
-  <depth>0</depth>
+  <depth>-450</depth>
   <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
@@ -42,6 +42,9 @@ cpu_type = "bronze";
 cpu_hit_checkpoint_flag = false;
 
 debug_text = "";
+
+image_speed = 0;
+image_index = 0;
 </string>
           </argument>
         </arguments>
@@ -91,73 +94,58 @@ debug_text = "";
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>get_input();
-
-var wall_collision = place_meeting(x+hspeed, y+vspeed, Wall_obj);
-
-if (wall_collision)
+            <string>if (Player_obj.time_elapsed &gt;= 0)
 {
-    charge = 0;
-    braking = false;
-    speed = 0;
-    change_direction();
-}
-
-if (!braking)
-{
-    if (space_pressed)
+    get_input();
+    
+    var wall_collision = place_meeting(x+hspeed, y+vspeed, Wall_obj);
+    
+    if (wall_collision)
     {
-        braking = true;
-        
-        var test_cp = next_checkpoint;
-        var test_index = next_checkpoint_index;
-        var next_wall = get_next_wall_in_direction(x, y, direction);
-        //Step back
-        var next_wall_x = next_wall.x + 8 + cos(direction/180*pi + pi)*16;
-        var next_wall_y = next_wall.y + 8 - sin(direction/180*pi + pi)*16
-        
-        if (collision_line(x, y, next_wall_x, next_wall_y, test_cp, true, true))
+        charge = 0;
+        braking = false;
+        speed = 0;
+        change_direction();
+    }
+    
+    if (!braking)
+    {
+        if (space_pressed)
         {
-            test_index += 1;
-            if (test_index &gt; ds_list_size(CheckpointManager_obj.checkpoints)-1)
-            {
-                test_index = 0;
-            }
-            test_cp = ds_list_find_value(CheckpointManager_obj.checkpoints, test_index);
+            braking = true;
+            image_angle = predict_next_dir_ext();
         }
-        
-        image_angle = predict_next_dir(next_wall_x, next_wall_y, direction, test_cp);
-    }
-    else
-    {
-        speed += accel_speed;
-        if (speed &gt; max_speed) { speed = max_speed; }
-    }
-}
-
-if (braking)
-{
-    if (!space_released)
-    {
-        speed -= accel_speed;
-        charge += accel_speed;
-        if (speed &lt;= 0)
+        else
         {
-            speed = 0;
-            space_released = true;
+            speed += accel_speed;
+            if (speed &gt; max_speed) { speed = max_speed; }
         }
     }
     
-    if (space_released)
+    if (braking)
     {
-        braking = false;
-        change_direction();
+        if (!space_released)
+        {
+            speed -= accel_speed;
+            charge += accel_speed;
+            if (speed &lt;= 0)
+            {
+                speed = 0;
+                space_released = true;
+            }
+        }
+        
+        if (space_released)
+        {
+            braking = false;
+            change_direction();
+        }
     }
-}
-
-if (is_ghost_active(cpu_type))
-{
-    visible = true;
+    
+    if (is_ghost_active(cpu_type))
+    {
+        visible = true;
+    }
 }
 </string>
           </argument>
@@ -253,18 +241,16 @@ while(place_meeting(x, y, other))
             <kind>1</kind>
             <string>if (cpu_type != "player")
 {
-    var distance_to_player = point_distance(x, y, Player_obj.x, Player_obj.y);
-    var opacity = 0;
-    if (distance_to_player &gt;= 32)
+    if point_distance(x, y, Player_obj.x, Player_obj.y &gt; 4)
     {
-        opacity = 0.5;   
+        image_alpha = 0.5;
     }
-    else if (distance_to_player &gt; 16)
+    else
     {
-        opacity = (distance_to_player-16) / 32;
+        image_alpha = 0;
     }
-    image_alpha = opacity;
-} 
+}
+
 draw_self();
 </string>
           </argument>

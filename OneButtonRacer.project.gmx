@@ -10,6 +10,9 @@
     <sprite>sprites\Checkpoint_spr</sprite>
     <sprite>sprites\Racer_spr</sprite>
     <sprite>sprites\Tracks_spr</sprite>
+    <sprite>sprites\LapCap_spr</sprite>
+    <sprite>sprites\RaceUI_spr</sprite>
+    <sprite>sprites\Numbers_spr</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
@@ -24,17 +27,22 @@
     <script>scripts\is_ghost_active.gml</script>
     <script>scripts\pause_game.gml</script>
     <script>scripts\unpause_game.gml</script>
+    <script>scripts\predict_next_dir_ext.gml</script>
+    <script>scripts\set_colors.gml</script>
   </scripts>
   <objects name="objects">
     <object>objects\Wall_obj</object>
     <object>objects\Racer_obj</object>
     <object>objects\Player_obj</object>
-    <object>objects\CheckpointManager_obj</object>
     <object>objects\Checkpoint_obj</object>
     <object>objects\Tracks_obj</object>
-    <object>objects\GhostManager_obj</object>
-    <object>objects\PauseManager_obj</object>
-    <object>objects\ColorManager_obj</object>
+    <objects name="Singletons">
+      <object>objects\ColorManager_obj</object>
+      <object>objects\GhostManager_obj</object>
+      <object>objects\PauseManager_obj</object>
+      <object>objects\CheckpointManager_obj</object>
+      <object>objects\RaceUI_obj</object>
+    </objects>
   </objects>
   <rooms name="rooms">
     <room>rooms\Loop</room>

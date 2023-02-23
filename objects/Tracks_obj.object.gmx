@@ -3,7 +3,7 @@
   <spriteName>Tracks_spr</spriteName>
   <solid>0</solid>
   <visible>0</visible>
-  <depth>100</depth>
+  <depth>-400</depth>
   <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
@@ -35,12 +35,20 @@
 }
 else
 {
-    x = Player_obj.x;
-    y = Player_obj.y;
-    image_angle = Player_obj.image_angle;
-    if (!place_meeting(x, y, Tracks_obj))
+    if (!Player_obj.braking)
     {
-        visible = true;
+        Player_obj.current_track = noone;
+        instance_destroy();
+    }
+    else
+    {
+        x = Player_obj.x;
+        y = Player_obj.y;
+        image_angle = Player_obj.direction;
+        if (!place_meeting(x, y, Tracks_obj))
+        {
+            visible = true;
+        }
     }
 }
 </string>

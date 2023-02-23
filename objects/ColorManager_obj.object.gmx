@@ -26,6 +26,37 @@
           <argument>
             <kind>1</kind>
             <string>monochrome = false;
+
+yellow_color = make_color_rgb(255, 190, 11);
+orange_color = make_color_rgb(251, 86, 7);
+pink_color = make_color_rgb(255, 0, 110);
+purple_color = make_color_rgb(131, 56, 236);
+blue_color = make_color_rgb(58, 134, 255);
+
+set_colors();
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="3" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>set_colors();
 </string>
           </argument>
         </arguments>

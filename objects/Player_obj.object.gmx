@@ -3,7 +3,7 @@
   <spriteName>Racer_spr</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>-100</depth>
+  <depth>-500</depth>
   <persistent>0</persistent>
   <parentName>Racer_obj</parentName>
   <maskName>&lt;undefined&gt;</maskName>
@@ -25,20 +25,10 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (instance_number(CheckpointManager_obj) == 0)
-{
-    instance_create(0, 0, CheckpointManager_obj);
-}
-
-if (instance_number(GhostManager_obj) == 0)
-{
-    instance_create(0, 0, GhostManager_obj);
-}
-
-if (instance_number(PauseManager_obj) == 0)
-{
-    instance_create(0, 0, PauseManager_obj);
-}
+            <string>if (instance_number(CheckpointManager_obj) == 0) { instance_create(0, 0, CheckpointManager_obj); }
+if (instance_number(GhostManager_obj) == 0) { instance_create(0, 0, GhostManager_obj); }
+if (instance_number(PauseManager_obj) == 0) { instance_create(0, 0, PauseManager_obj); }
+if (instance_number(ColorManager_obj) == 0) { instance_create(0, 0, ColorManager_obj); }
 
 event_inherited();
 
@@ -56,7 +46,9 @@ with (gold) { cpu_type = "gold"; }
 var platinum = instance_create(x,y,Racer_obj); 
 with (platinum) { cpu_type = "platinum"; }
 
-current_track = instance_create(x, y, Tracks_obj);
+current_track = noone;
+
+time_elapsed = -45;
 
 pause_game();
 </string>
@@ -83,15 +75,27 @@ pause_game();
             <kind>1</kind>
             <string>event_inherited();
 
-if (current_track.visible)
+/*if ((current_track == noone || current_track.visible) &amp;&amp; braking)
 {
     current_track = instance_create(x, y, Tracks_obj);
-}
+}*/
 
 //Test
 if (keyboard_check(ord("R")))
 {
     game_restart();
+}
+
+time_elapsed += 1;
+
+if (braking)
+{
+    var percent_of_max_charge = charge/12;
+    image_index = image_number * percent_of_max_charge;
+}
+else
+{
+    image_index = 0;
 }
 </string>
           </argument>

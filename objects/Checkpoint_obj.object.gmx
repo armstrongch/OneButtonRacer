@@ -2,8 +2,8 @@
 <object>
   <spriteName>Checkpoint_spr</spriteName>
   <solid>0</solid>
-  <visible>0</visible>
-  <depth>0</depth>
+  <visible>-1</visible>
+  <depth>-350</depth>
   <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
@@ -52,7 +52,7 @@ right_anchor = noone;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_self();
+            <string>/*draw_self();
 var center_x = x + image_xscale/2*16;
 var center_y = y + image_yscale/2*16;
 if (instance_exists(next_wall))
@@ -69,6 +69,43 @@ if (instance_exists(right_anchor))
 {
     draw_set_color(c_blue);
     draw_line(center_x, center_y, right_anchor.x+8, right_anchor.y+8);
+}*/
+
+if (id == ds_list_find_value(CheckpointManager_obj.checkpoints, 0).id)
+{
+    var is_horizontal = image_xscale &gt; image_yscale;
+    
+    var x_offset;
+    var y_offset;
+    var x_incr;
+    var y_incr;
+    var checkpoint_angle;
+    
+    if (is_horizontal)
+    {
+        x_offset = 8;
+        y_offset = 8;
+        x_incr = 8;
+        y_incr = 0;
+        checkpoint_angle = 0;
+    }
+    else
+    {
+        x_offset = 8;
+        y_offset = 8;
+        x_incr = 0;
+        y_incr = 8;
+        checkpoint_angle = 270;
+    }
+    
+    while (instance_position(x + x_offset + x_incr, y + y_offset + y_incr, self))
+    {
+        draw_sprite_ext(LapCap_spr, 0,
+            x+x_offset, y+y_offset,
+            1, 1, checkpoint_angle, image_blend, 1);
+        x_offset += x_incr;
+        y_offset += y_incr;
+    }
 }
 </string>
           </argument>
