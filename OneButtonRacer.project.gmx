@@ -45,6 +45,9 @@
     </objects>
   </objects>
   <rooms name="rooms">
+    <room>rooms\Stairs</room>
+    <room>rooms\Field</room>
+    <room>rooms\Hairpin</room>
     <room>rooms\Loop</room>
   </rooms>
   <help>

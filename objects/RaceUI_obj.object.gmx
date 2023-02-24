@@ -7,7 +7,59 @@
   <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
-  <events/>
+  <events>
+    <event eventtype="8" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>draw_self();
+if (instance_number(Player_obj) &gt; 0)
+{
+    draw_sprite_ext(Numbers_spr, Player_obj.lap_num, x+28, y, 1, 1, 0, image_blend, 1);
+    
+    var decimal_index = 10;
+    var colon_index = 11;
+    var max_time = 9*60*30 + 59*30 + 99/100*30;
+    var time_elapsed = min(abs(Player_obj.time_elapsed), max_time);
+    
+    var minutes_elapsed = floor(time_elapsed/30/60);
+    var seconds_elapsed = floor(time_elapsed/30) - minutes_elapsed*60;
+    var tenths_elapsed = floor(time_elapsed/30*10) - minutes_elapsed*60*10 - seconds_elapsed*10;
+    var hundredths_elapsed = floor(time_elapsed/30*100) - minutes_elapsed*60/100 - seconds_elapsed/100 - tenths_elapsed/10;
+    
+    digits[0] = minutes_elapsed;
+    digits[1] = colon_index;
+    digits[2] = floor(seconds_elapsed/10);
+    digits[3] = seconds_elapsed % 10;
+    digits[4] = decimal_index;
+    digits[5] = tenths_elapsed;
+    digits[6] = hundredths_elapsed;
+    
+    for (var i = 0; i &lt; 7; i += 1)
+    {
+        draw_sprite_ext(Numbers_spr, digits[i], x+28+i*12, y+16, 1, 1, 0, image_blend, 1);
+    }
+}
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+  </events>
   <PhysicsObject>0</PhysicsObject>
   <PhysicsObjectSensor>0</PhysicsObjectSensor>
   <PhysicsObjectShape>0</PhysicsObjectShape>
