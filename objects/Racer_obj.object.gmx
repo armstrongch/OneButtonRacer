@@ -173,6 +173,17 @@ image_index = 0;
 {
     if (next_checkpoint_index == 0)
     {
+        if (lap_num &lt;= 3)
+        {
+            if (id == Player_obj.id)
+            {
+                CheckpointManager_obj.player_splits[lap_num] = time_elapsed;
+            }
+            else if (CheckpointManager_obj.best_cpu_splits[lap_num] == noone)
+            {
+                CheckpointManager_obj.best_cpu_splits[lap_num] = Player_obj.time_elapsed;
+            }
+        }
         lap_num += 1;
     }
     
@@ -241,7 +252,7 @@ while(place_meeting(x, y, other))
             <kind>1</kind>
             <string>if (cpu_type != "player")
 {
-    if point_distance(x, y, Player_obj.x, Player_obj.y &gt; 4)
+    if point_distance(x, y, Player_obj.x, Player_obj.y &gt; 12)
     {
         image_alpha = 0.5;
     }

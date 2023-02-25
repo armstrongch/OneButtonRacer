@@ -29,6 +29,7 @@
     <script>scripts\unpause_game.gml</script>
     <script>scripts\predict_next_dir_ext.gml</script>
     <script>scripts\set_colors.gml</script>
+    <script>scripts\populate_digits_array.gml</script>
   </scripts>
   <objects name="objects">
     <object>objects\Wall_obj</object>
@@ -45,10 +46,10 @@
     </objects>
   </objects>
   <rooms name="rooms">
-    <room>rooms\Stairs</room>
-    <room>rooms\Field</room>
-    <room>rooms\Hairpin</room>
     <room>rooms\Loop</room>
+    <room>rooms\Hairpin</room>
+    <room>rooms\Field</room>
+    <room>rooms\Stairs</room>
   </rooms>
   <help>
     <rtf>help.rtf</rtf>

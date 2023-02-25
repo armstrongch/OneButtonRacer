@@ -46,7 +46,7 @@ switch(cpu_type)
         break;
     case "platinum":
         var calc_brake_dist = brake_dist();
-        var braking_dist_to_next_checkpoint = dist_to_next_checkpoint + 24 < calc_brake_dist;
+        var braking_dist_to_next_checkpoint = dist_to_next_checkpoint + 24 < calc_brake_dist * 0.75;
         if (!braking && braking_dist_to_next_checkpoint)
         {
             space_pressed = true;
@@ -56,6 +56,8 @@ switch(cpu_type)
             space_released = true;
         }
         debug_text = "cpu_hit_checkpoint_flag: " + string(cpu_hit_checkpoint_flag);
+        break;
+    case "ultra":
         break;
     case "bronze":
     default:

@@ -27,6 +27,12 @@
             <kind>1</kind>
             <string>var racer = instance_find(Racer_obj, 0);
 create_checkpoints(racer.x, racer.y, direction);
+
+for (var i = 0; i &lt;= 3; i += 1)
+{
+    player_splits[i] = noone;
+    best_cpu_splits[i] = noone;
+}
 </string>
           </argument>
         </arguments>

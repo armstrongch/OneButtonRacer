@@ -28,29 +28,43 @@
             <string>draw_self();
 if (instance_number(Player_obj) &gt; 0)
 {
-    draw_sprite_ext(Numbers_spr, Player_obj.lap_num, x+28, y, 1, 1, 0, image_blend, 1);
+    draw_sprite_ext(Numbers_spr, min(3, Player_obj.lap_num), x+28, y, 1, 1, 0, image_blend, 1);
     
-    var decimal_index = 10;
-    var colon_index = 11;
-    var max_time = 9*60*30 + 59*30 + 99/100*30;
-    var time_elapsed = min(abs(Player_obj.time_elapsed), max_time);
-    
-    var minutes_elapsed = floor(time_elapsed/30/60);
-    var seconds_elapsed = floor(time_elapsed/30) - minutes_elapsed*60;
-    var tenths_elapsed = floor(time_elapsed/30*10) - minutes_elapsed*60*10 - seconds_elapsed*10;
-    var hundredths_elapsed = floor(time_elapsed/30*100) - minutes_elapsed*60/100 - seconds_elapsed/100 - tenths_elapsed/10;
-    
-    digits[0] = minutes_elapsed;
-    digits[1] = colon_index;
-    digits[2] = floor(seconds_elapsed/10);
-    digits[3] = seconds_elapsed % 10;
-    digits[4] = decimal_index;
-    digits[5] = tenths_elapsed;
-    digits[6] = hundredths_elapsed;
+    if (Player_obj.lap_num &lt;= 3)
+    {
+        populate_digits_array(Player_obj.time_elapsed, false);
+    }
+    else
+    {
+        populate_digits_array(CheckpointManager_obj.player_splits[3], false);
+    }
     
     for (var i = 0; i &lt; 7; i += 1)
     {
         draw_sprite_ext(Numbers_spr, digits[i], x+28+i*12, y+16, 1, 1, 0, image_blend, 1);
+    }
+    
+    var most_recent_lap_finished = -1;
+    for (var i = 0; i &lt;= 3; i += 1)
+    {
+        if (CheckpointManager_obj.player_splits[i] != noone &amp;&amp; CheckpointManager_obj.best_cpu_splits[i] != noone)
+        {
+            most_recent_lap_finished = i;
+        }
+    }
+    
+    if (most_recent_lap_finished &gt;= 0)
+    {
+        var elapsed_dif =
+            CheckpointManager_obj.best_cpu_splits[most_recent_lap_finished]
+            - CheckpointManager_obj.player_splits[most_recent_lap_finished];
+        
+        populate_digits_array(elapsed_dif, true);
+        
+        for (var i = 0; i &lt; 7; i += 1)
+        {
+            draw_sprite_ext(Numbers_spr, digits[i], x+28+i*12, y+32, 1, 1, 0, image_blend, 1);
+        }
     }
 }
 

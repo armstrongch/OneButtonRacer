@@ -32,5 +32,8 @@
     <frame index="9">images\Numbers_spr_9.png</frame>
     <frame index="10">images\Numbers_spr_10.png</frame>
     <frame index="11">images\Numbers_spr_11.png</frame>
+    <frame index="12">images\Numbers_spr_12.png</frame>
+    <frame index="13">images\Numbers_spr_13.png</frame>
+    <frame index="14">images\Numbers_spr_14.png</frame>
   </frames>
 </sprite>
